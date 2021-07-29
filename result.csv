@@ -1,0 +1,9 @@
+Email,Status Code,SSL
+some@google.com,200,http
+some@google.com,200,https
+some2@ya.ru,200,http
+some2@ya.ru,200,https
+some3@lalalallslslslsl.ru,None,http
+some3@lalalallslslslsl.ru,None,https
+admin@gurmanit.ru,200,http
+admin@gurmanit.ru,200,https
