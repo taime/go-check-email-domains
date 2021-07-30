@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -34,11 +35,11 @@ func main() {
 			if success {
 				mxHost := checkMx(domain)
 
-				var dmn, scode = checkUrl("http://" + domain)
-				fmt.Println(dmn)
-				fmt.Println(scode)
-				var newLine = []string{email, scode, "http", mxHost}
-				data = append(data, newLine)
+				// var dmn, scode = checkUrl("http://" + domain)
+				// fmt.Println(dmn)
+				// fmt.Println(scode)
+				// var newLine = []string{email, scode, "http", mxHost}
+				// data = append(data, newLine)
 
 				var dmn2, scode2 = checkUrl("https://" + domain)
 				fmt.Println(dmn2)
@@ -67,8 +68,12 @@ func writeToFileData(filepath string, data [][]string) {
 }
 
 func checkUrl(url string) (string, string) {
+	client := http.Client{
+		Timeout: 1 * time.Second,
+	}
 
-	resp, err := http.Get(url)
+	// resp, err := http.Get(url)
+	resp, err := client.Get(url)
 	if err != nil {
 		// handle error
 		return url, "None"
