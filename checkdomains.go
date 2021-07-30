@@ -6,6 +6,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -21,7 +22,7 @@ func main() {
 	}
 	fmt.Println(dir)
 
-	var data = [][]string{{"Email", "Status Code", "SSL"}}
+	var data = [][]string{{"Email", "Status Code", "SSL", "MX RECORDS"}}
 	email, err := readLines(dir + "/emails.txt")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
@@ -29,18 +30,20 @@ func main() {
 		for i, email := range email {
 			fmt.Println(i)
 			fmt.Println(email)
-			url, success := emailToDomain(email)
+			domain, success := emailToDomain(email)
 			if success {
-				var dmn, scode = checkUrl("http://" + url)
+				mxHost := checkMx(domain)
+
+				var dmn, scode = checkUrl("http://" + domain)
 				fmt.Println(dmn)
 				fmt.Println(scode)
-				var newLine = []string{email, scode, "http"}
+				var newLine = []string{email, scode, "http", mxHost}
 				data = append(data, newLine)
 
-				var dmn2, scode2 = checkUrl("https://" + url)
+				var dmn2, scode2 = checkUrl("https://" + domain)
 				fmt.Println(dmn2)
 				fmt.Println(scode2)
-				var newLine2 = []string{email, scode2, "https"}
+				var newLine2 = []string{email, scode2, "https", mxHost}
 				data = append(data, newLine2)
 			}
 		}
@@ -75,6 +78,22 @@ func checkUrl(url string) (string, string) {
 	// fmt.Println(body)
 	scode := strconv.Itoa(resp.StatusCode)
 	return url, scode
+
+}
+
+func checkMx(domain string) string {
+	mxHost := "None"
+	mxs, err := net.LookupMX(domain)
+	if err != nil {
+		// panic(err)
+	} else {
+		for _, mx := range mxs {
+			fmt.Printf("%s %v\n", mx.Host, mx.Pref)
+		}
+		mxHost = mxs[0].Host
+	}
+
+	return mxHost
 
 }
 
