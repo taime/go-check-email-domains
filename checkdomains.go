@@ -17,32 +17,7 @@ import (
 )
 
 func main() {
-
-	_, callerFile, _, _ := runtime.Caller(0)
-	dir := filepath.Dir(callerFile)
-
-	fmt.Println("--------------------------------------------")
-	fmt.Println("")
-	fmt.Println(dir)
-	fmt.Println("")
-	fmt.Println("--------------------------------------------")
-
-	// ex, err := os.Executable()
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// exPath := filepath.Dir(ex)
-
-	// dir, err := filepath.Abs("./")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// fmt.Println(dir)
+	dir := getCurrentDir()
 
 	var data = [][]string{{"Email", "Status Code", "SSL", "MX RECORDS"}}
 	email, err := readLines(dir + "/emails.txt")
@@ -156,4 +131,34 @@ func checkError(message string, err error) {
 	if err != nil {
 		log.Fatal(message, err)
 	}
+}
+
+func getCurrentDir() string {
+
+	_, callerFile, _, _ := runtime.Caller(0)
+	dir := filepath.Dir(callerFile)
+
+	// fmt.Println("--------------------------------------------")
+	// fmt.Println("")
+	// fmt.Println(dir)
+	// fmt.Println("")
+	// fmt.Println("--------------------------------------------")
+
+	// ex, err := os.Executable()
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// exPath := filepath.Dir(ex)
+
+	// dir, err := filepath.Abs("./")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// fmt.Println(dir)
+	return (dir)
 }
