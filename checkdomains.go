@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 	"time"
@@ -17,11 +18,31 @@ import (
 
 func main() {
 
-	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
-	if err != nil {
-		log.Fatal(err)
-	}
+	_, callerFile, _, _ := runtime.Caller(0)
+	dir := filepath.Dir(callerFile)
+
+	fmt.Println("--------------------------------------------")
+	fmt.Println("")
 	fmt.Println(dir)
+	fmt.Println("")
+	fmt.Println("--------------------------------------------")
+
+	// ex, err := os.Executable()
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// exPath := filepath.Dir(ex)
+
+	// dir, err := filepath.Abs("./")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// fmt.Println(dir)
 
 	var data = [][]string{{"Email", "Status Code", "SSL", "MX RECORDS"}}
 	email, err := readLines(dir + "/emails.txt")
