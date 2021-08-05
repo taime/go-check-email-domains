@@ -31,11 +31,11 @@ func main() {
 			if success {
 				mxHost := checkMx(domain)
 
-				// var dmn, scode = checkUrl("http://" + domain)
-				// fmt.Println(dmn)
-				// fmt.Println(scode)
-				// var newLine = []string{email, scode, "http", mxHost}
-				// data = append(data, newLine)
+				var dmn, scode = checkUrl("http://" + domain)
+				fmt.Println(dmn)
+				fmt.Println(scode)
+				var newLine = []string{email, scode, "http", mxHost}
+				data = append(data, newLine)
 
 				var dmn2, scode2 = checkUrl("https://" + domain)
 				fmt.Println(dmn2)

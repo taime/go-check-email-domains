@@ -1,5 +1,5 @@
 Email,Status Code,SSL,MX RECORDS
-some@google.com,200,https,smtp.google.com.
+some@google.com,200,https,aspmx.l.google.com.
 some3@lalalallslslslsl.ru,None,https,None
 admin@gurmanit.ru,200,https,mx.yandex.net.
 some@rifesta.com,None,https,None
